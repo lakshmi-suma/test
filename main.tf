@@ -16,13 +16,18 @@ resource "ibm_container_vpc_cluster" "cluster" {
   update_all_workers     = true
   wait_for_worker_update = true
 
-  dynamic zones {
-    for_each = var.subnets
-    content {
-      subnet_id = zones.value.id
-      name      = zones.value.zone
-    }
+  zones {
+    
+      subnet_id = ibm-ibm_is_subnet.subnet1.id
+      name      =  "us-south-1"
   }
 }
+
+resource "ibm_is_subnet" "subnet1" {  
+  name = "subnet-1"  
+vpc = ibm_is_vpc.example.id  
+zone = "us-south-1" 
+ total_ipv4_address_count = 256
+ }
 
 
