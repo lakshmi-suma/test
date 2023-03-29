@@ -13,8 +13,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
   flavor                 = "bx2.16x64"
   worker_count           = "1"
   kube_version           = "1.26.3"
-  //entitlement          = var.entitlement --> required for OpenShift cluster
-  //cos_instance_crn     = var.cos_instance_id --> required for OpenShift cluster
   update_all_workers     = true
   wait_for_worker_update = true
 
