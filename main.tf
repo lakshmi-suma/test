@@ -18,7 +18,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
 
   zones {
     
-      subnet_id = ibm-ibm_is_subnet.subnet1.id
+      subnet_id = ibm_is_subnet.subnet1.id
       name      =  "us-south-1"
   }
 }
