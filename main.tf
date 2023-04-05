@@ -1,6 +1,6 @@
 resource "ibm_is_vpc" "example" {
   name = "test-vpc"
-  resource_group=var.resource_group_id
+  resource_group=var.resource_group
 
 }
 
