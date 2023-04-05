@@ -29,11 +29,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
 resource "ibm_is_subnet" "subnet1" {  
   name = "subnet-1"  
   vpc =ibm_is_vpc.example.id  
-  zone-1 = {
-      name           = "subnet-1"
-      cidr           = "172.17.0.0/24"
-      public_gateway = true
-    }
+  zone="eu-de-1"
   # zone = "us-south-1" 
   # total_ipv4_address_count = 256
   resource_group=var.resource_group
