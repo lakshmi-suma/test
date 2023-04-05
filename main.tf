@@ -34,7 +34,7 @@ resource "ibm_is_subnet" "subnet1" {
   # zone = "us-south-1" 
   # total_ipv4_address_count = 256
   resource_group=var.resource_group
-  cidr_block          = "10.0.1.0/24"
+  # cidr_block          = "10.0.1.0/24"
   ipv4_cidr_block     = cidrsubnet("10.0.1.0/24", 8, 2)
  }
 
