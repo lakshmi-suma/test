@@ -30,7 +30,7 @@ resource "ibm_is_subnet" "subnet1" {
   name = "subnet-1"  
   vpc =ibm_is_vpc.example.id  
   zone="eu-de-1"
-  ipv4_cidr_block = ibm_container_vpc_cluster.cluster.ipv4_cidr_block
+  ipv4_cidr_block = 256
   # zone = "us-south-1" 
   # total_ipv4_address_count = 256
   resource_group=var.resource_group
