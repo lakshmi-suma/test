@@ -15,6 +15,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   kube_version           = "1.26.3"
   update_all_workers     = true
   wait_for_worker_update = true
+  resource_group_id=var.resource_group_id
 
   zones {
     
