@@ -1,11 +1,11 @@
 resource "ibm_is_vpc" "example" {
-  name = "vpctest"
+  name = "vpctest1"
   resource_group=var.resource_group
 
 }
 
 resource "ibm_is_subnet" "subnet1" {
-  name                     = "mysubnet1"
+  name                     = "testsubnet"
   vpc                      = ibm_is_vpc.example.id
   zone                     = "us-south-1"
   total_ipv4_address_count = 256
