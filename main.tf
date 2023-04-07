@@ -4,9 +4,18 @@ resource "ibm_is_vpc" "example" {
 
 }
 
+data "ibm_is_vpc" "testvpc" {
+  
+  name="vpctest"
+}
 
-
-
+output "test" {
+  value=ibm_is_vpc.testvpc
+  depends_on = [
+    ibm_is_vpc.example
+  ]
+  
+}
 
 
 # resource "ibm_container_vpc_cluster" "cluster" {
