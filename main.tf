@@ -18,34 +18,27 @@ resource "ibm_container_vpc_cluster" "cluster" {
   flavor            = "bx2.4x16"
   worker_count      = 3
   resource_group_id=var.resource_group_id
-  kube_version      = "1.26.3"  
+  kube_version      = "1.25.8"  
+  update_all_workers     = true
+  wait_for_worker_update = true
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
   }
 }
 
-resource "ibm_container_vpc_worker_pool" "cluster_pool" {
-  cluster           = ibm_container_vpc_cluster.cluster.id
-  worker_pool_name  = "mywp"
-  flavor            = "bx2.2x8"
-  vpc_id            = ibm_is_vpc.example.id
-  worker_count      = 3
-  resource_group_id = var.resource_group_id
-  zones {
-    name      = "us-south-1"
-    subnet_id = ibm_is_subnet.subnet1.id
-  }
-}
- 
-
-
-
-
-
-
-
-
+# resource "ibm_container_vpc_worker_pool" "cluster_pool" {
+#   cluster           = ibm_container_vpc_cluster.cluster.id
+#   worker_pool_name  = "mywp"
+#   flavor            = "bx2.2x8"
+#   vpc_id            = ibm_is_vpc.example.id
+#   worker_count      = 3
+#   resource_group_id = var.resource_group_id
+#   zones {
+#     name      = "us-south-1"
+#     subnet_id = ibm_is_subnet.subnet1.id
+#   }
+# }
 
 # resource "ibm_container_vpc_cluster" "cluster" {
 #   name                   = "test-cluster"
