@@ -19,8 +19,8 @@ resource "ibm_container_vpc_cluster" "cluster" {
   worker_count      = 3
   resource_group_id=var.resource_group_id
   kube_version      = "1.25.8"  
-  update_all_workers     = true
-  wait_for_worker_update = true
+  # update_all_workers     = true
+  # wait_for_worker_update = true
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
