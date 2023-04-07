@@ -4,13 +4,10 @@ resource "ibm_is_vpc" "example" {
 
 }
 
-data "ibm_is_vpc" "testvpc" {
-  
-  name="vpctest"
-}
+
 
 output "test" {
-  value=ibm_is_vpc.testvpc
+  value=ibm_is_vpc.example
   depends_on = [
     ibm_is_vpc.example
   ]
