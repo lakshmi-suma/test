@@ -18,7 +18,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   flavor            = "bx2.4x16"
   worker_count      = 3
   resource_group_id=var.resource_group_id
-  kube_version      = "1.17.5"  
+  kube_version      = "1.26.3"  
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
