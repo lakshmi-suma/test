@@ -1,3 +1,4 @@
 provider "ibm" {
-  region = "eu-gb"
+  # region = "eu-gb"
+  generation=2
 }
