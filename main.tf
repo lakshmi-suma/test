@@ -18,7 +18,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   flavor            = "bx2.4x16"
   worker_count      = 3
   resource_group_id=var.resource_group_id
-  kube_version      = "1.25.8"  
+  kube_version      = "1.26.3"  
   # update_all_workers     = true
   # wait_for_worker_update = true
   zones {
