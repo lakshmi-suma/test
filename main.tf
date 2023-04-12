@@ -30,9 +30,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-data "ibm_container_cluster_config" "cluster_config" {
-  cluster_name_id =ibm_container_vpc_cluster.cluster.cluster_id
-}
+
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
 #   cluster           = ibm_container_vpc_cluster.cluster.id
