@@ -12,6 +12,9 @@ resource "ibm_is_subnet" "subnet1" {
   resource_group=var.resource_group
 }
 
+
+
+
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "test-cluster"
   vpc_id            = ibm_is_vpc.example.id
@@ -25,6 +28,10 @@ resource "ibm_container_vpc_cluster" "cluster" {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
   }
+}
+
+data "ibm_container_cluster_config" "cluster_config" {
+  cluster_name_id =ibm_container_vpc_cluster.cluster.cluster_id
 }
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
