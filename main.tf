@@ -31,40 +31,40 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-# data "ibm_is_subnet_reserved_ips" "example" {
-#   subnet = ibm_is_subnet.subnet1.id
+data "ibm_is_subnet_reserved_ips" "example" {
+  subnet = ibm_is_subnet.subnet1.id
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
+}
+
+output "reserved_ips" {
+  value=data.ibm_is_subnet_reserved_ips.example.reserved_ips.address
+  depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
+
+  
+}
+
+# data "ibm_container_vpc_cluster" "cluster" {
+#   name  = "test-cluster"
+#   depends_on = [ ibm_container_vpc_cluster.cluster ]
+  
+# }
+
+# output "workers" {
+#   value = data.ibm_container_vpc_cluster.cluster.workers
+#   depends_on = [ data.ibm_container_vpc_cluster.cluster ]
+  
+# }
+
+# data "ibm_container_vpc_cluster_worker" "worker_foo" {
+#   worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
+#   cluster_name_id = "test-cluster"
 #   depends_on = [ ibm_container_vpc_cluster.cluster ]
 # }
-
-# output "reserved_ips" {
-#   value=data.ibm_is_subnet_reserved_ips.example.reserved_ips
-#   depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
-
+# output "ip_address" {
+#   value=data.ibm_container_vpc_cluster_worker.worker_foo.ip_address
+#   depends_on = [ data.ibm_container_vpc_cluster_worker.worker_foo ]
   
 # }
-
-data "ibm_container_vpc_cluster" "cluster" {
-  name  = "test-cluster"
-  depends_on = [ ibm_container_vpc_cluster.cluster ]
-  
-}
-
-output "workers" {
-  value = data.ibm_container_vpc_cluster.cluster.workers
-  depends_on = [ data.ibm_container_vpc_cluster.cluster ]
-  
-}
-
-data "ibm_container_vpc_cluster_worker" "worker_foo" {
-  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
-  cluster_name_id = "test-cluster"
-  depends_on = [ ibm_container_vpc_cluster.cluster ]
-}
-output "ip_address" {
-  value=data.ibm_container_vpc_cluster_worker.worker_foo.ip_address
-  depends_on = [ data.ibm_container_vpc_cluster_worker.worker_foo ]
-  
-}
 
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
