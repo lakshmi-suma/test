@@ -55,6 +55,16 @@ output "workers" {
   
 }
 
+data "ibm_container_vpc_cluster_worker" "worker_foo" {
+  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
+  cluster_name_id = "test-cluster"
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
+}
+output "ip_address" {
+  value=data.ibm_container_vpc_cluster_worker.worker_foo.ip_address
+  
+}
+
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
 #   cluster           = ibm_container_vpc_cluster.cluster.id
