@@ -31,17 +31,28 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-data "ibm_is_subnet_reserved_ips" "example" {
-  subnet = ibm_is_subnet.subnet1.id
+data "ibm_container_cluster_worker" "cluster_foo" {
+  worker_id = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 
-output "reserved_ips" {
-  value=data.ibm_is_subnet_reserved_ips.example.reserved_ips["address"]
-  depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
-
+output "private_ip" {
+  value = data.ibm_container_cluster_worker.cluster_foo.private_ip
+  depends_on = [ data.ibm_container_cluster_worker.cluster_foo ]
   
 }
+
+# data "ibm_is_subnet_reserved_ips" "example" {
+#   subnet = ibm_is_subnet.subnet1.id
+#   depends_on = [ ibm_container_vpc_cluster.cluster ]
+# }
+
+# output "reserved_ips" {
+#   value=data.ibm_is_subnet_reserved_ips.example.reserved_ips.address
+#   depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
+
+  
+# }
 
 # data "ibm_container_vpc_cluster" "cluster" {
 #   name  = "test-cluster"
