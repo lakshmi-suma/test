@@ -24,6 +24,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   kube_version      = "1.26.3"  
   update_all_workers     = true
   wait_for_worker_update = true
+  depends_on = [ ibm_is_subnet.subnet1 ]
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
@@ -32,10 +33,12 @@ resource "ibm_container_vpc_cluster" "cluster" {
 
 data "ibm_is_subnet_reserved_ips" "example" {
   subnet = ibm_is_subnet.subnet1.id
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 
 output "reserved_ips" {
   value=data.ibm_is_subnet_reserved_ips.example.reserved_ips
+  depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
 
   
 }
