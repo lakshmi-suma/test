@@ -30,6 +30,11 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
+data "ibm_container_vpc_cluster" "cluster" {
+  name  = "test-cluster"
+  
+}
+
 
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
