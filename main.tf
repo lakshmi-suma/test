@@ -30,10 +30,20 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-data "ibm_container_vpc_cluster" "cluster" {
-  name  = "test-cluster"
+data "ibm_is_subnet_reserved_ips" "example" {
+  subnet = ibm_is_subnet.subnet1.id
+}
+
+output "reserved_ips" {
+  value=data.ibm_is_subnet_reserved_ips.example.reserved_ips
+
   
 }
+
+# data "ibm_container_vpc_cluster" "cluster" {
+#   name  = "test-cluster"
+  
+# }
 
 
 
