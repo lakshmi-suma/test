@@ -37,7 +37,7 @@ data "ibm_is_subnet_reserved_ips" "example" {
 }
 
 output "reserved_ips" {
-  value=data.ibm_is_subnet_reserved_ips.example.reserved_ips.address
+  value=data.ibm_is_subnet_reserved_ips.example.reserved_ips["address"]
   depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
 
   
