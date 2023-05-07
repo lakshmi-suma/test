@@ -33,6 +33,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
 
 data "ibm_container_cluster_worker" "cluster_foo" {
   worker_id = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
+  resource_group_id=var.resource_group_id
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 
