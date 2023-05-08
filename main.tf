@@ -70,7 +70,7 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
 }
 
 locals {
-  ips="${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}"
+  ips="${concat(var.ips,"${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}")}"
   # lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
 }
 output "loc" {
