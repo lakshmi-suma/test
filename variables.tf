@@ -38,7 +38,7 @@ variable "resource_group" {
   
 }
 variable "ips" {
-    type="list"
+    type=list(string)
     default = []
   
 }
