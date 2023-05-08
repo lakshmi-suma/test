@@ -69,12 +69,12 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 output "ip_address1" {
-  value=concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address",""))
+  value=concat(var.ips,tolist(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")))
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
   
 }
 output "ip_address2" {
-  value=concat(var.ips,(lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")))
+  value=concat(var.ips,tolist(lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")))
   
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
   
