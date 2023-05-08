@@ -37,9 +37,14 @@ variable "resource_group" {
     type = string
   
 }
-
-variable "worker_ids" {
-    type=list(data.ibm_container_vpc_cluster.cluster.workers)
-    # depends_on=[data.ibm_container_vpc_cluster_worker]
+variable "ips" {
+    type="list"
+    default = []
   
 }
+
+# variable "worker_ids" {
+#     type=list(data.ibm_container_vpc_cluster.cluster.workers)
+#     # depends_on=[data.ibm_container_vpc_cluster_worker]
+  
+# }

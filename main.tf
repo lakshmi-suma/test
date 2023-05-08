@@ -44,26 +44,38 @@ resource "ibm_container_vpc_cluster" "cluster" {
   
 # }
 
-# data "ibm_container_vpc_cluster" "cluster" {
-#   name  = "test-cluster"
-#   depends_on = [ ibm_container_vpc_cluster.cluster ]
+data "ibm_container_vpc_cluster" "cluster" {
+  name  = "test-cluster"
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
   
-# }
+}
 
-# output "workers" {
-#   value = data.ibm_container_vpc_cluster.cluster.workers
-#   depends_on = [ data.ibm_container_vpc_cluster.cluster ]
+output "workers" {
+  value = data.ibm_container_vpc_cluster.cluster.workers
+  depends_on = [ data.ibm_container_vpc_cluster.cluster ]
   
-# }
+}
 
-data "ibm_container_vpc_cluster_worker" "worker_foo" {
+data "ibm_container_vpc_cluster_worker" "worker1" {
+  # worker_id=[for a in data.ibm_container_vpc_cluster.cluster.workers]
   worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
+  # concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker_foo.network_interfaces[0],"ip_address",""))
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
-output "ip_address" {
-  value=lookup(data.ibm_container_vpc_cluster_worker.worker_foo.network_interfaces[0],"ip_address","")
-  depends_on = [ data.ibm_container_vpc_cluster_worker.worker_foo ]
+data "ibm_container_vpc_cluster_worker" "worker2" {
+  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-000005f4"
+  cluster_name_id = "test-cluster"
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
+}
+output "ip_address1" {
+  value=concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address",""))
+  depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
+  
+}
+output "ip_address2" {
+  value=concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
+  depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
   
 }
 
