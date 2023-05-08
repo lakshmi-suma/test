@@ -78,6 +78,10 @@ output "ip_address2" {
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
   
 }
+output "varia" {
+  value=var.ips
+  
+}
 
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
