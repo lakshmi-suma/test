@@ -67,12 +67,13 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
   worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-000005f4"
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
+  ip_address=lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")
 }
 
-locals {
-  ips=concat(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address",""),
-  lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
-}
+# locals {
+#   ips=concat(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address",""),
+#   lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
+# }
 output "ip_address1" {
   value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
