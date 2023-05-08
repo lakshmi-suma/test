@@ -62,7 +62,7 @@ data "ibm_container_vpc_cluster_worker" "worker_foo" {
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 output "ip_address" {
-  value=data.ibm_container_vpc_cluster_worker.worker_foo
+  value=data.ibm_container_vpc_cluster_worker.worker_foo.ip_address
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker_foo ]
   
 }
