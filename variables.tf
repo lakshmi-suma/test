@@ -37,11 +37,11 @@ variable "resource_group" {
     type = string
   
 }
-variable "ips" {
-    type=list(string)
-    default = []
+# variable "ips" {
+#     type=list(string)
+#     default = []
   
-}
+# }
 
 # variable "worker_ids" {
 #     type=list(data.ibm_container_vpc_cluster.cluster.workers)
