@@ -68,6 +68,11 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
+
+locals {
+  ips=concat(tolist(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")),
+  tolist(lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")))
+}
 output "ip_address1" {
   value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
@@ -78,15 +83,15 @@ output "ip_address2" {
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
   
 }
-output "varia" {
-  value=var.ips
+# output "varia" {
+#   value=var.ips
   
-}
-variable "add" {
-  type = list(string)
+# }
+# variable "add" {
+#   type = list(string)
   
   
-}
+# }
 
 # resource "ibm_container_vpc_worker_pool" "cluster_pool" {
 #   cluster           = ibm_container_vpc_cluster.cluster.id
