@@ -70,8 +70,8 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
 }
 
 locals {
-  ips=concat(tolist(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")),
-  tolist(lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")))
+  ips=concat(lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address",""),
+  lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
 }
 output "ip_address1" {
   value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
