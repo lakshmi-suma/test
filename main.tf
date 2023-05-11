@@ -79,10 +79,10 @@ locals {
 #   type = list(string)
 #   default = [ locals.ip1,locals.ip2 ]
 # }
-output "loc" {
-  value = local.ips
+# output "loc" {
+#   value = local.ips
   
-}
+# }
 output "ip_address1" {
   value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
