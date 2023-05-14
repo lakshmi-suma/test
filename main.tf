@@ -75,11 +75,13 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
 }
 
 output "ip_address" {
-  value = [
-    for worker_id in data.ibm_container_vpc_cluster_worker.worker1:
-    # azurerm_storage_account.my_storage.example[storage].id
-    lookup(data.ibm_container_vpc_cluster_worker.worker1[each.key].network_interfaces[0],"ip_address","")
-  ]
+  value=data.ibm_container_vpc_cluster_worker.worker1
+  depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
+  # value = [
+  #   for worker_id in data.ibm_container_vpc_cluster_worker.worker1:
+  #   # azurerm_storage_account.my_storage.example[storage].id
+  #   lookup(data.ibm_container_vpc_cluster_worker.worker1[each.key].network_interfaces[0],"ip_address","")
+  # ]
 }
 
 # locals {
