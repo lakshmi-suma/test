@@ -64,7 +64,7 @@ data "ibm_container_vpc_cluster_worker" "worker1" {
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 data "ibm_container_vpc_cluster_worker" "worker2" {
-  worker_id       = "cgnsv2ud0jhkn4p263d0-ca7c0c4"
+  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-mywp-0000080d"
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
