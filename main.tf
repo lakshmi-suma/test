@@ -56,25 +56,37 @@ output "workers" {
   
 }
 
+
 data "ibm_container_vpc_cluster_worker" "worker1" {
   # worker_id=[for a in data.ibm_container_vpc_cluster.cluster.workers]
-  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"
+  # worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"]
+ 
   # concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker_foo.network_interfaces[0],"ip_address",""))
+  for_each= toset(data.ibm_container_vpc_cluster.cluster.workers)
+  worker_id = each.value
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
+
 data "ibm_container_vpc_cluster_worker" "worker2" {
   worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-mywp-00000761"
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 
-locals {
-  ip1="${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}"
-  ip2="${lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")}"
-  # lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address",""))
-  # ips=tolist(ip1,ip2)
+output "ip_address" {
+  value = [
+    for ip in data.ibm_container_vpc_cluster.cluster.workers:
+    # azurerm_storage_account.my_storage.example[storage].id
+    lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
+  ]
 }
+
+# locals {
+#   ip1="${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}"
+#   ip2="${lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")}"
+
+# }
 # variable "ips" {
 #   type = list(string)
 #   default = [ locals.ip1,locals.ip2 ]
