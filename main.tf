@@ -103,18 +103,18 @@ output "ip_address2" {
   
 # }
 
-# resource "ibm_container_vpc_worker_pool" "cluster_pool" {
-#   cluster           = ibm_container_vpc_cluster.cluster.id
-#   worker_pool_name  = "mywp"
-#   flavor            = "bx2.2x8"
-#   vpc_id            = ibm_is_vpc.example.id
-#   worker_count      = 3
-#   resource_group_id = var.resource_group_id
-#   zones {
-#     name      = "us-south-1"
-#     subnet_id = ibm_is_subnet.subnet1.id
-#   }
-# }
+resource "ibm_container_vpc_worker_pool" "cluster_pool" {
+  cluster           = ibm_container_vpc_cluster.cluster.id
+  worker_pool_name  = "mywp"
+  flavor            = "bx2.2x8"
+  vpc_id            = ibm_is_vpc.example.id
+  worker_count      = 2
+  resource_group_id = var.resource_group_id
+  zones {
+    name      = "us-south-1"
+    subnet_id = ibm_is_subnet.subnet1.id
+  }
+}
 
 # resource "ibm_container_vpc_cluster" "cluster" {
 #   name                   = "test-cluster"
