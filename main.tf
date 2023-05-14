@@ -77,7 +77,7 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
 output "ip" {
   value = [
     for i in data.ibm_container_vpc_cluster.cluster.workers:
-    lookup(data.ibm_cointainer_vpc_cluster_worker_worker1,i)
+    lookup(data.ibm_cointainer_vpc_cluster_worker.worker1,i)
   ]
   
 }
