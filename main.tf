@@ -78,7 +78,7 @@ output "ip" {
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
   value = [
     for i in data.ibm_container_vpc_cluster.cluster.workers:
-    lookup(lookup(lookup(data.ibm_container_vpc_cluster_worker.worker1,i),"network_interfaces[0]"),"ip_address")
+    lookup(lookup(lookup(data.ibm_container_vpc_cluster_worker.worker1,i),"network_interfaces")[0],"ip_address")
     
   ]
   
