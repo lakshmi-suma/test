@@ -76,7 +76,7 @@ data "ibm_container_vpc_cluster_worker" "worker2" {
 
 output "ip_address" {
   value = [
-    for ip in data.ibm_container_vpc_cluster.cluster.workers:
+    for worker_id in data.ibm_container_vpc_cluster_worker.worker1:
     # azurerm_storage_account.my_storage.example[storage].id
     lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
   ]
@@ -86,25 +86,17 @@ output "ip_address" {
 #   ip1="${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}"
 #   ip2="${lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")}"
 
-# }
-# variable "ips" {
-#   type = list(string)
-#   default = [ locals.ip1,locals.ip2 ]
-# }
-# output "loc" {
-#   value = local.ips
+
+# output "ip_address1" {
+#   value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
+#   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
   
 # }
-output "ip_address1" {
-  value=lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
-  depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
+# output "ip_address2" {
+#   value=lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")
+#   depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
   
-}
-output "ip_address2" {
-  value=lookup(data.ibm_container_vpc_cluster_worker.worker2.network_interfaces[0],"ip_address","")
-  depends_on = [ data.ibm_container_vpc_cluster_worker.worker2 ]
-  
-}
+# }
 # output "varia" {
 #   value=var.ips
   
