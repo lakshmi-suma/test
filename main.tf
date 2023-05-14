@@ -78,7 +78,7 @@ output "ip_address" {
   value = [
     for worker_id in data.ibm_container_vpc_cluster_worker.worker1:
     # azurerm_storage_account.my_storage.example[storage].id
-    lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")
+    lookup(data.ibm_container_vpc_cluster_worker.worker1[each.worker_id].network_interfaces[0],"ip_address","")
   ]
 }
 
