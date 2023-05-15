@@ -12,9 +12,6 @@ resource "ibm_is_subnet" "subnet1" {
   resource_group=var.resource_group
 }
 
-
-
-
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "test-cluster"
   vpc_id            = ibm_is_vpc.example.id
@@ -32,48 +29,35 @@ resource "ibm_container_vpc_cluster" "cluster" {
 }
 
 
-# data "ibm_is_subnet_reserved_ips" "example" {
-#   subnet = ibm_is_subnet.subnet1.id
-#   depends_on = [ ibm_container_vpc_cluster.cluster ]
-# }
 
-# output "reserved_ips" {
-#   value=data.ibm_is_subnet_reserved_ips.example.reserved_ips.address
-#   depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
-
-  
-# }
-
+#To fetch information about the vpc cluster
 data "ibm_container_vpc_cluster" "cluster" {
   name  = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
   
 }
-
+# Print the id's of the workers
 output "workers" {
   value = data.ibm_container_vpc_cluster.cluster.workers
   depends_on = [ data.ibm_container_vpc_cluster.cluster ]
   
 }
 
-
+#To fetch information about each worker node
 data "ibm_container_vpc_cluster_worker" "worker1" {
-  # worker_id=[for a in data.ibm_container_vpc_cluster.cluster.workers]
-  # worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-default-0000042d"]
- 
-  # concat(var.ips,lookup(data.ibm_container_vpc_cluster_worker.worker_foo.network_interfaces[0],"ip_address",""))
   for_each= toset(data.ibm_container_vpc_cluster.cluster.workers)
   worker_id = each.value
   cluster_name_id = "test-cluster"
   depends_on = [ ibm_container_vpc_cluster.cluster ]
 }
 
-data "ibm_container_vpc_cluster_worker" "worker2" {
-  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-mywp-00000761"
-  cluster_name_id = "test-cluster"
-  depends_on = [ ibm_container_vpc_cluster.cluster ]
+#To print the information about the workers
+output "ip_address" {
+  value=data.ibm_container_vpc_cluster_worker.worker1
+  depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
 }
 
+#To filter the ip address and store in a list
 output "ip" {
   depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
   value = [
@@ -83,15 +67,36 @@ output "ip" {
   ]
   
 }
-output "ip_address" {
-  value=data.ibm_container_vpc_cluster_worker.worker1
-  depends_on = [ data.ibm_container_vpc_cluster_worker.worker1 ]
+
+data "ibm_container_vpc_cluster_worker" "worker2" {
+  worker_id       = "kube-cgnsv2ud0jhkn4p263d0-testcluster-mywp-00000761"
+  cluster_name_id = "test-cluster"
+  depends_on = [ ibm_container_vpc_cluster.cluster ]
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   # value = [
   #   for worker_id in data.ibm_container_vpc_cluster_worker.worker1:
   #   # azurerm_storage_account.my_storage.example[storage].id
   #   lookup(data.ibm_container_vpc_cluster_worker.worker1[each.key].network_interfaces[0],"ip_address","")
   # ]
-}
+# }
 
 # locals {
 #   ip1="${lookup(data.ibm_container_vpc_cluster_worker.worker1.network_interfaces[0],"ip_address","")}"
@@ -118,18 +123,30 @@ output "ip_address" {
   
 # }
 
-resource "ibm_container_vpc_worker_pool" "cluster_pool" {
-  cluster           = ibm_container_vpc_cluster.cluster.id
-  worker_pool_name  = "mywp"
-  flavor            = "bx2.2x8"
-  vpc_id            = ibm_is_vpc.example.id
-  worker_count      = 2
-  resource_group_id = var.resource_group_id
-  zones {
-    name      = "us-south-1"
-    subnet_id = ibm_is_subnet.subnet1.id
-  }
-}
+# resource "ibm_container_vpc_worker_pool" "cluster_pool" {
+#   cluster           = ibm_container_vpc_cluster.cluster.id
+#   worker_pool_name  = "mywp"
+#   flavor            = "bx2.2x8"
+#   vpc_id            = ibm_is_vpc.example.id
+#   worker_count      = 2
+#   resource_group_id = var.resource_group_id
+#   zones {
+#     name      = "us-south-1"
+#     subnet_id = ibm_is_subnet.subnet1.id
+#   }
+# }
+
+# data "ibm_is_subnet_reserved_ips" "example" {
+#   subnet = ibm_is_subnet.subnet1.id
+#   depends_on = [ ibm_container_vpc_cluster.cluster ]
+# }
+
+# output "reserved_ips" {
+#   value=data.ibm_is_subnet_reserved_ips.example.reserved_ips.address
+#   depends_on = [ data.ibm_is_subnet_reserved_ips.example ]
+
+  
+# }
 
 # resource "ibm_container_vpc_cluster" "cluster" {
 #   name                   = "test-cluster"
