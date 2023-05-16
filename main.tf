@@ -25,7 +25,7 @@ resource "ibm_is_public_gateway" "example" {
 resource "ibm_is_subnet_public_gateway_attachment" "subatt" {
   subnet                = ibm_is_subnet.subnet1.id
   public_gateway         = ibm_is_public_gateway.example.id
-  resource_group_id=var.resource_group_id
+  resource_group_name=IaC-dev
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
