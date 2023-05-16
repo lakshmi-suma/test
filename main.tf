@@ -10,7 +10,7 @@ resource "ibm_is_subnet" "subnet1" {
   zone                     = "us-south-1"
   total_ipv4_address_count = 256
   resource_group=var.resource_group
-  public_gateway = true
+  # public_gateway = true
 }
 resource "ibm_is_public_gateway" "example" {
   name = "example-gateway"
