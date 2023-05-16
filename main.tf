@@ -16,6 +16,7 @@ resource "ibm_is_public_gateway" "example" {
   name = "example-gateway"
   vpc  = ibm_is_vpc.example.id
   zone = "us-south-1"
+  resource_group=var.resource_group
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
