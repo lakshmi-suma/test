@@ -25,6 +25,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
+    public_gateway = true
   }
 }
 
