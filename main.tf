@@ -22,6 +22,11 @@ resource "ibm_is_public_gateway" "example" {
   }
 }
 
+resource "ibm_is_subnet_public_gateway_attachment" "subatt" {
+  subnet                = ibm_is_subnet.subnet1.id
+  public_gateway         = ibm_is_public_gateway.example.id
+}
+
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "test-cluster"
   vpc_id            = ibm_is_vpc.example.id
