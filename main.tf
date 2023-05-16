@@ -10,6 +10,7 @@ resource "ibm_is_subnet" "subnet1" {
   zone                     = "us-south-1"
   total_ipv4_address_count = 256
   resource_group=var.resource_group
+  public_gateway = true
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
@@ -25,7 +26,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   zones {
     subnet_id = ibm_is_subnet.subnet1.id
     name      = "us-south-1"
-    public_gateway = true
+    
   }
 }
 
