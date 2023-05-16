@@ -17,6 +17,9 @@ resource "ibm_is_public_gateway" "example" {
   vpc  = ibm_is_vpc.example.id
   zone = "us-south-1"
   resource_group=var.resource_group
+  timeouts {
+    create = "90m"
+  }
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
