@@ -1,4 +1,4 @@
-resource "ibm_is_vpc" "vpc" {
+resource "ibm_is_vpc" "example" {
   name = "vpctest1"
   resource_group=var.resource_group
 
@@ -6,25 +6,22 @@ resource "ibm_is_vpc" "vpc" {
 
 resource "ibm_is_subnet" "subnet1" {
   name                     = "testsubnet"
-  vpc                      = ibm_is_vpc.vpc.id
+  vpc                      = ibm_is_vpc.example.id
   zone                     = "us-south-1"
   total_ipv4_address_count = 256
   resource_group=var.resource_group
   # public_gateway = true
 }
 resource "ibm_is_public_gateway" "example" {
-  name = "public-gateway"
-  vpc  = ibm_is_vpc.vpc.id
+  name = "example-gateway"
+  vpc  = ibm_is_vpc.example.id
   zone = "us-south-1"
   resource_group=var.resource_group
-  timeouts {
-    create = "90m"
-  }
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "test-cluster"
-  vpc_id            = ibm_is_vpc.vpc.id
+  vpc_id            = ibm_is_vpc.example.id
   flavor            = "bx2.4x16"
   worker_count      = 3
   resource_group_id=var.resource_group_id
